@@ -52,6 +52,10 @@ public class ReservaDAO extends HibernateDAO<Reserva> {
 		Integer id = this.gerarNovoId().intValue();
 		o.setIdReserva(id);
 
+		ifNotNullTrimAndUpperCaseMotivoAndUsuario(o);
+	}
+
+	public void ifNotNullTrimAndUpperCaseMotivoAndUsuario(Reserva o) {
 		if (o.getMotivo() != null) {
 			o.setMotivo(o.getMotivo().trim().toUpperCase());
 		}
@@ -331,14 +335,7 @@ public class ReservaDAO extends HibernateDAO<Reserva> {
 
 	@Override
 	public void preAlteracao(Reserva o) {
-		if (o.getMotivo() != null) {
-			o.setMotivo(o.getMotivo().trim().toUpperCase());
-		}
-
-		if (o.getNomeUsuario() != null) {
-			o.setNomeUsuario(o.getNomeUsuario().trim().toUpperCase());
-		}
-
+		ifNotNullTrimAndUpperCaseMotivoAndUsuario(o);
 	}
 
 	public List<Reserva> pesquisaReserva(Campus campus, Integer idTransacao) {
